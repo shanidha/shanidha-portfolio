@@ -30,7 +30,8 @@ jQuery(document).ready(function($) {
             break;
 
           case 'minlen':
-            if (i.val().length < parseInt(exp)) {
+            var specialCharPattern = /^[!@#$%^&*(),.?":{}|<>]/;
+            if (i.val().length < parseInt(exp)||specialCharPattern.test(i.val())) {
               ferror = ierror = true;
             }
             break;
@@ -53,6 +54,14 @@ jQuery(document).ready(function($) {
               ferror = ierror = true;
             }
             break;
+          
+            case 'nospecialchar':
+              var specialCharPattern = /^[!@#$%^&*(),.?":{}|<>]/;
+              if (specialCharPattern.test(i.val())) {
+                  ferror = ierror = true;
+              }
+              break;
+
         }
         i.next('.validation').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
       }
